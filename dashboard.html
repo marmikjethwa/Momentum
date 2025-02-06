@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do List Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <div class="header">
+            <h2 id="welcome-message"></h2>
+            <button onclick="logout()" class="logout-btn">Logout</button>
+        </div>
+
+        <div class="create-list">
+            <input type="text" id="list-name" placeholder="New List Name">
+            <button onclick="createList()">Create List</button>
+        </div>
+
+        <div id="lists-container" class="lists-container"></div>
+
+        <div id="tasks-container" class="tasks-container" style="display: none;">
+            <div class="tasks-header">
+                <h3 id="selected-list-name"></h3>
+                <button onclick="backToLists()" class="back-btn">Back to Lists</button>
+            </div>
+            <div class="add-task">
+                <input type="text" id="task-input" placeholder="New Task">
+                <button onclick="addTask()">Add Task</button>
+            </div>
+            <ul id="task-list"></ul>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
