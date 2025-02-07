@@ -15,9 +15,10 @@
 
         <div class="create-list">
             <input type="text" id="list-name" placeholder="New List Name">
-            <button onclick="createList()">Create List</button>
+           
         </div>
-
+        
+        
         <div id="lists-container" class="lists-container"></div>
 
         <div id="tasks-container" class="tasks-container" style="display: none;">
@@ -32,6 +33,8 @@
             <ul id="task-list"></ul>
         </div>
     </div>
+    <button onclick="createList()" style="position: fixed;bottom:20px;right:20px;border-radius:25px;height:40px;width:40px;padding:10px;">+</button>
+</div>
     <script src="script.js"></script>
 </body>
 </html>
