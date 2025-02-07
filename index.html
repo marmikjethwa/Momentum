@@ -5,8 +5,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>To-Do App - Login</title>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     <link rel="stylesheet" href="style.css">
     <link rel="manifest" href="manifest.json">
+    
 <meta name="theme-color" content="#007bff">
 </head>
 <body>
@@ -20,9 +22,16 @@
             <h2>Login</h2>
             <input type="text" id="username" placeholder="Enter username">
             <input type="password" id="password" placeholder="Enter password">
+            
+            <!-- reCAPTCHA -->
+            <div class="g-recaptcha" data-sitekey="6Lc3ANAqAAAAACmeoqkrST2c3RmitX7GNqvEpOiz"></div>
             <button onclick="login()">Login</button>
             <p>Don't have an account? <a href="#" onclick="showRegister()">Register</a></p>
         </div>
+        
+        <!-- reCAPTCHA Script -->
+        <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+        
 
         <div class="register-box" style="display: none;">
             <h2>Register</h2>

@@ -42,9 +42,15 @@ async function register() {
 async function login() {
     const username = document.getElementById("username").value.trim();
     const password = document.getElementById("password").value.trim();
+    const recaptchaResponse = grecaptcha.getResponse(); // Get reCAPTCHA response
 
     if (!username || !password) {
         alert("Please enter both username and password.");
+        return;
+    }
+
+    if (!recaptchaResponse) {
+        alert("Please complete the reCAPTCHA.");
         return;
     }
 
@@ -52,7 +58,7 @@ async function login() {
         const response = await fetch(`${apiUrl}/login`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ username, password })
+            body: JSON.stringify({ username, password, recaptchaResponse })
         });
 
         const result = await response.json();
@@ -67,6 +73,7 @@ async function login() {
         alert("Error during login. Please try again.");
     }
 }
+
 
 function logout() {
     localStorage.removeItem("userId");

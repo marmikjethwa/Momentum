@@ -1,4 +1,6 @@
 const express = require("express");
+const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args));
+
 const path = require("path");
 const { Pool } = require("pg");
 
@@ -82,14 +84,28 @@ app.post("/register", async (req, res) => {
     }
 });
 
+const RECAPTCHA_SECRET = "6Lc3ANAqAAAAAJBj1ajLij_TGsdVBalaLERJieGd";
 // User Login
 app.post("/login", async (req, res) => {
-    const { username, password } = req.body;
+    const { username, password, recaptchaResponse } = req.body;
     try {
+        // 1️⃣ Verify reCAPTCHA with Google
+        const recaptchaVerify = await fetch(
+            `https://www.google.com/recaptcha/api/siteverify?secret=${RECAPTCHA_SECRET}&response=${recaptchaResponse}`,
+            { method: "POST" }
+        );
+
+        const recaptchaData = await recaptchaVerify.json();
+        if (!recaptchaData.success) {
+            return res.status(400).json({ error: "reCAPTCHA verification failed" });
+        }
+
+        // 2️⃣ Check username and password
         const result = await pool.query(
             "SELECT id FROM users WHERE username = $1 AND password = $2",
             [username, password]
         );
+
         if (result.rows.length) {
             res.json({ message: "Login successful!", userId: result.rows[0].id });
         } else {
