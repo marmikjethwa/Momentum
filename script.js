@@ -1,15 +1,27 @@
 const apiUrl = "http://localhost:3000";
 let selectedListId = null;
 
-function showRegister() {
-    document.querySelector('.login-box').style.display = 'none';
-    document.querySelector('.register-box').style.display = 'block';
-}
+// function showRegister() {
+//     document.querySelector('.login-box').style.display = 'none';
+//     document.querySelector('.register-box').style.display = 'block';
+// }
 
-function showLogin() {
-    document.querySelector('.register-box').style.display = 'none';
-    document.querySelector('.login-box').style.display = 'block';
-}
+// function showLogin() {
+//     document.querySelector('.register-box').style.display = 'none';
+//     document.querySelector('.login-box').style.display = 'block';
+// }
+
+const container = document.querySelector('.container');
+const registerBtn = document.querySelector('.register-btn');
+const loginBtn = document.querySelector('.login-btn');
+
+registerBtn.addEventListener('click', () => {
+    container.classList.add('active');
+});
+
+loginBtn.addEventListener('click', () => {
+    container.classList.remove('active');
+});
 
 async function register() {
     const username = document.getElementById("register-username").value.trim();
