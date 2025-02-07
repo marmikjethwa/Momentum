@@ -1,53 +1,206 @@
-body {
-    font-family: Arial, sans-serif;
-    background: #f4f4f4;
+@import url('https://fonts.googleapis.com/css2?family=Fira+Sans:wght@300;400;600;700&display=swap');
+
+* {
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
+    font-family: 'Fira Sans', sans-serif;
+    font-weight: 400;
 }
-
-.container {
+body {
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    padding: 20px;
+    background: linear-gradient(90deg, #f8edc5, #9B89F9);
 }
 
-.intro {
+.container {
+    position: relative;
+    width: 950px;
+    height: 550px;
+    background: #fff;
+    border-radius: 30px;
+    box-shadow: 0 0 30px rgba(0,0,0,0.2);
+    overflow: hidden;
+}
+
+.form-box {
+    position: absolute;
+    right: 0;
     width: 50%;
-    text-align: left;
-    padding: 20px;
+    height: 100%;
+    background: #fff;
+    display: flex;
+    align-items: center;
+    color: #333;
+    text-align: center;
+    padding: 40px;
+    z-index: 1;
+    transition: 0.6s ease-in-out 1.2s, visibility 0s 1s;
 }
 
-.login-box, .register-box {
-    width: 300px;
-    padding: 20px;
-    background: white;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    border-radius: 8px;
+.container.active .form-box {
+    right: 50%;
 }
 
-input {
+.form-box.register-box {
+    visibility: hidden;
+}
+
+.container.active .form-box.register-box {
+    visibility: visible;
+}
+
+form {
     width: 100%;
-    padding: 12px;
-    margin: 8px 0;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    box-sizing: border-box;
 }
 
-button {
-    background: #4CAF50;
-    color: white;
-    padding: 12px 20px;
+.container h2 {
+    font-size: 36px;
+    margin: -10px 0;
+}
+
+.input-box {
+    position: relative;
+    margin: 20px 0;
+}
+
+.input-box input {
+    width: 100%;
+    padding: 13px 50px 13px 20px;
+    background: #eee;
+    border-radius: 8px;
     border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background 0.3s;
+    outline: none;
+    font-size: 16px;
+    color: #333;
+    font-weight: 500;
 }
 
-button:hover {
-    background: #45a049;
+.input-box input::placeholder {
+    color: #888;
+    font-weight: 400;
+}
+
+.input-box i {
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 20px;
+    color: #888;
+}
+
+.forgot-link {
+    margin: -15px 0 0;
+}
+
+.forgot-link a {
+    font-size: 15px;
+    color: #333;
+    text-decoration: none;
+}
+
+.recaptcha {
+    display: flex;
+    justify-content: center;
+}
+
+.g-recaptcha {
+    transform: scale(0.75);
+    border: 2px solid #ccc;
+    padding: 10px;
+    border-radius: 8px;
+    background-color: #f8f8f8;
+}
+
+.btn {
+    width: 100%;
+    height: 48px;
+    background: #ffd22f;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 600;
+    transition: 0.5s;
+}
+
+.btn:hover {
+    background: #feda59;
+    transition: 0.5s;
+}
+
+.toggle-box {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+.toggle-box::before {
+    content: '';
+    position: absolute;
+    width: 300%;
+    height: 100%;
+    background: #9B89F9;
+    z-index: 2;
+    left: -250%;
+    border-radius: 150px;
+    transition: 1.8s ease-in-out;
+}
+
+.container.active .toggle-box::before{
+    left: 50%;
+}
+
+.toggle-panel {
+    position: absolute;
+    width: 50%;
+    height: 100%;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-self: center;
+    align-items: center;
+    z-index: 2;
+    top: 30%;
+    transition: 0.6s ease-in-out;
+}
+
+.toggle-panel p {
+    margin-bottom: 25px;
+    font-size: 15px;
+}
+
+.toggle-panel.toggle-left {
+    left: 0;
+    transition-delay: 1.2s;
+}
+
+.container.active .toggle-panel.toggle-left {
+    left: -50%;
+    transition-delay: 0.6s;
+}
+
+.toggle-panel.toggle-right {
+    right: -50%;
+    transition-delay: 0.6s;
+}
+
+.container.active .toggle-panel.toggle-right {
+    right: 0;
+    transition-delay: 1.2s;
+}
+
+.toggle-panel .btn {
+    width: 160px;
+    height: 46px;
+    background: transparent;
+    border: 2px solid white;
+    box-shadow: none;
+    color: white;
 }
 
 .dashboard-container {
