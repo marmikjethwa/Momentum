@@ -3,11 +3,16 @@ const path = require("path");
 const { Pool } = require("pg");
 
 const app = express();
+const PORT = 3000;
 
 // Middleware
 app.use(express.json());
-app.use(express.static(__dirname));
+app.use(express.static(__dirname)); // Serve static files
 
+// Serve manifest.json explicitly
+app.use("/manifest.json", (req, res) => {
+    res.sendFile(path.join(__dirname, "manifest.json"));
+});
 // PostgreSQL Connection
 const pool = new Pool({
     user: "postgres",
@@ -261,7 +266,7 @@ app.delete("/tasks/:taskId", async (req, res) => {
 });
 
 // Start the Server
-const PORT = 3000;
+//const PORT = 3000;
 app.listen(PORT, () => {
     console.log(`Server running at http://localhost:${PORT}`);
     console.log('Database configuration:', {

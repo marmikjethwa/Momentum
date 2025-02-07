@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>To-Do App - Login</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#007bff">
 </head>
 <body>
     <div class="container">
@@ -31,5 +33,15 @@
         </div>
     </div>
     <script src="script.js"></script>
+    
+
+<script>
+  if ("serviceWorker" in navigator) {
+    navigator.serviceWorker.register("service-worker.js")
+      .then((reg) => console.log("Service Worker registered!", reg))
+      .catch((err) => console.log("Service Worker registration failed", err));
+  }
+</script>
+
 </body>
 </html>
