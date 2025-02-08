@@ -1,5 +1,7 @@
 const apiUrl = "http://localhost:3000";
 let selectedListId = null;
+let currentListId = null;
+let currentListName = null;
 
 // function showRegister() {
 //     document.querySelector('.login-box').style.display = 'none';
@@ -99,6 +101,119 @@ function logout() {
     localStorage.removeItem("username");
     window.location.href = "index.html";
 }
+document.addEventListener('DOMContentLoaded', () => {
+    checkAuth();
+    setupEventListeners();
+});
+
+function checkAuth() {
+    const userId = localStorage.getItem("userId");
+    if (!userId && !window.location.pathname.includes("index.html")) {
+        window.location.href = "index.html";
+    } else if (window.location.pathname.includes("dashboard.html")) {
+        loadLists();
+    }
+}
+
+function setupEventListeners() {
+    // Modal close on outside click
+    window.addEventListener('click', (event) => {
+        const modals = document.getElementsByClassName('modal');
+        Array.from(modals).forEach(modal => {
+            if (event.target === modal) {
+                closeModal(modal.id);
+            }
+        });
+    });
+
+    // Close modal when clicking X button
+    const closeButtons = document.getElementsByClassName('close-modal');
+    Array.from(closeButtons).forEach(button => {
+        button.addEventListener('click', () => {
+            const modal = button.closest('.modal');
+            closeModal(modal.id);
+        });
+    });
+
+    // Handle Enter key in rename input
+    const renameInput = document.getElementById('rename-input');
+    if (renameInput) {
+        renameInput.addEventListener('keyup', (event) => {
+            if (event.key === 'Enter') {
+                handleRename();
+            }
+        });
+    }
+
+    // Handle Escape key to close modals
+    document.addEventListener('keyup', (event) => {
+        if (event.key === 'Escape') {
+            const modals = document.getElementsByClassName('modal');
+            Array.from(modals).forEach(modal => {
+                closeModal(modal.id);
+            });
+        }
+    });
+}
+
+function showModal(modalId) {
+    const modal = document.getElementById(modalId);
+    modal.style.display = 'block';
+    
+    if (modalId === 'renameModal') {
+        const input = document.getElementById('rename-input');
+        input.value = currentListName;
+        input.focus();
+    }
+}
+
+function closeModal(modalId) {
+    const modal = document.getElementById(modalId);
+    modal.style.display = 'none';
+    currentListId = null;
+    currentListName = null;
+}
+
+async function login() {
+    const username = document.getElementById("username").value.trim();
+    const password = document.getElementById("password").value.trim();
+    const recaptchaResponse = grecaptcha.getResponse();
+
+    if (!username || !password) {
+        alert("Please enter both username and password.");
+        return;
+    }
+
+    if (!recaptchaResponse) {
+        alert("Please complete the reCAPTCHA.");
+        return;
+    }
+
+    try {
+        const response = await fetch(`${apiUrl}/login`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ username, password, recaptchaResponse })
+        });
+
+        const result = await response.json();
+        if (response.ok) {
+            localStorage.setItem("userId", result.userId);
+            localStorage.setItem("username", username);
+            window.location.href = "dashboard.html";
+        } else {
+            alert(result.error);
+        }
+    } catch (error) {
+        alert("Error during login. Please try again.");
+    }
+}
+
+function logout() {
+    localStorage.removeItem("userId");
+    localStorage.removeItem("username");
+    window.location.href = "index.html";
+}
 
 async function createList() {
     const userId = localStorage.getItem("userId");
@@ -169,54 +284,64 @@ function toggleOptions(listId) {
     optionsContent.classList.toggle('show');
 }
 
-async function renameList(listId, currentName) {
-    const newName = prompt("Enter new list name:", currentName);
-    if (newName && newName.trim() !== "" && newName !== currentName) {
+function renameList(listId, listName) {
+    currentListId = listId;
+    currentListName = listName;
+    showModal('renameModal');
+}
+
+function confirmDeleteList(listId) {
+    currentListId = listId;
+    showModal('deleteModal');
+}
+
+async function handleRename() {
+    const newName = document.getElementById('rename-input').value.trim();
+    if (newName && newName !== currentListName) {
         try {
-            const response = await fetch(`${apiUrl}/lists/${listId}`, {
+            const response = await fetch(`${apiUrl}/lists/${currentListId}`, {
                 method: "PATCH",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ name: newName })
             });
-            if (response.ok) loadLists();
+            if (response.ok) {
+                loadLists();
+                closeModal('renameModal');
+            }
         } catch (error) {
-            alert("Error renaming list. Please try again.");
+            console.error("Error renaming list:", error);
         }
     }
 }
 
-function confirmDeleteList(listId) {
-    if (confirm("Are you sure you want to delete this list?")) {
-        deleteList(listId);
-    }
-}
-
-async function deleteList(listId) {
+async function handleDelete() {
     try {
-        const response = await fetch(`${apiUrl}/lists/${listId}`, { 
+        const response = await fetch(`${apiUrl}/lists/${currentListId}`, { 
             method: "DELETE" 
         });
         if (response.ok) {
-            if (selectedListId === listId) {
+            if (selectedListId === currentListId) {
                 backToLists();
             }
             loadLists();
+            closeModal('deleteModal');
         }
     } catch (error) {
-        alert("Error deleting list. Please try again.");
+        console.error("Error deleting list:", error);
     }
 }
 
 function backToLists() {
     selectedListId = null;
     document.getElementById("tasks-container").style.display = "none";
-    loadLists();
+    document.getElementById("lists-container").style.display = "grid";
 }
 
 async function showTasks(listId, listName) {
     selectedListId = listId;
     document.getElementById("selected-list-name").textContent = listName;
     document.getElementById("tasks-container").style.display = "block";
+    document.getElementById("lists-container").style.display = "none";
     loadTasks(listId);
 }
 
