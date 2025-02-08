@@ -1,0 +1,368 @@
+@import url('https://fonts.googleapis.com/css2?family=Fira+Sans:wght@300;400;600;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Fira Sans', sans-serif;
+}
+
+body {
+    background: #f4f4f4;
+    margin: 0;
+    padding: 20px;
+}
+
+button {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+/* 🟢 General Button Styles */
+button:hover {
+    opacity: 0.9;
+}
+
+.createListBtn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    border-radius: 25px;
+    height: 40px;
+    width: 40px;
+    padding: 0 10px;
+    background-color: #28a745;
+    color: white;
+    font-size: 30px;
+}
+
+/* 🔵 Primary Buttons */
+.confirm-btn, .add-task button {
+    background: #4CAF50;
+    color: white;
+}
+
+.confirm-btn:hover, .add-task button:hover {
+    background: #45a049;
+}
+
+/* 🔴 Delete Button (Fixed Background Visibility) */
+.delete-btn {
+    background: #dc3545 !important; /* Ensure Red Background */
+    color: white !important; /* White text */
+    padding: 8px 12px;
+    border-radius: 4px;
+    font-size: 14px;
+    transition: background 0.3s;
+    display: inline-block; /* Fix collapsing issue */
+}
+
+.delete-btn:hover {
+    background: #c82333 !important; /* Darker red on hover */
+}
+
+/* 🟡 Cancel Button */
+.cancel-btn {
+    background: #e0e0e0;
+    color: #333;
+}
+
+.cancel-btn:hover {
+    background: #d0d0d0;
+}
+
+/* 🏠 Dashboard Container */
+.dashboard-container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* 🏠 Header */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+#welcome-message {
+    font-size: 24px;
+    color: #333;
+}
+
+/* 🔴 Logout Button */
+.logout-btn {
+    background: #f44336;
+    color: white;
+}
+
+.logout-btn:hover {
+    background: #da190b;
+}
+
+/* 📌 Create List Section */
+.create-list {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.create-list input {
+    padding: 10px;
+    width: 200px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+/* 📌 Lists Container */
+.lists-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+    margin-top: 20px;
+}
+
+/* 📝 List Box */
+.list-box {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    transition: transform 0.2s;
+    position: relative;
+}
+
+.list-box:hover {
+    transform: translateY(-2px);
+}
+
+.list-box h3 {
+    margin: 0 0 10px 0;
+    cursor: pointer;
+}
+
+.last-modified {
+    font-size: 12px;
+    color: #666;
+    margin: 5px 0;
+}
+
+/* 🛠 Options Menu */
+.options-menu {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+.options-btn {
+    background: none;
+    font-size: 20px;
+    color: #666;
+    cursor: pointer;
+}
+
+.options-content {
+    display: none;
+    position: absolute;
+    right: 0;
+    background: white;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    border-radius: 4px;
+    z-index: 1;
+    min-width: 120px;
+}
+
+.options-content.show {
+    display: block;
+}
+
+.options-content a {
+    display: block;
+    padding: 10px 15px;
+    text-decoration: none;
+    color: #333;
+}
+
+.options-content a:hover {
+    background: #f5f5f5;
+}
+
+/* ✅ Tasks Container */
+.tasks-container {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    margin-top: 30px;
+}
+
+.tasks-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+/* 🔙 Back Button */
+.back-btn {
+    background: #666;
+    color: white;
+}
+
+.back-btn:hover {
+    background: #555;
+}
+
+/* ➕ Add Task */
+.add-task {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+#task-input {
+    padding: 10px;
+    width: 70%;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+/* 📋 Task List */
+#task-list {
+    list-style: none;
+    padding: 0;
+}
+
+/* 📌 Individual Task */
+.task {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px;
+    margin: 8px 0;
+    background: #f9f9f9;
+    border-radius: 4px;
+    transition: background 0.2s;
+}
+
+.task:hover {
+    background: #f0f0f0;
+}
+
+/* 🟢 Task Text */
+.task span {
+    flex-grow: 1;
+    cursor: pointer;
+}
+
+/* ✅ Completed Task (Fixed Strikethrough) */
+.task.completed span {
+    text-decoration: line-through !important;
+    color: #666 !important;
+}
+
+/* 🎯 Task Actions */
+.task-actions {
+    display: flex;
+    gap: 5px;
+}
+
+/* 🟢 Toggle Task Button */
+.toggle-btn {
+    background: #28a745;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 4px;
+}
+
+/* 🔴 Delete Task Button */
+.delete-btn {
+    background: #dc3545 !important;
+    color: white !important;
+    padding: 5px 10px;
+}
+
+/* 🎭 Modals */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+}
+
+.modal-content {
+    background-color: #fff;
+    margin: 15% auto;
+    padding: 20px;
+    border-radius: 8px;
+    width: 90%;
+    max-width: 500px;
+    position: relative;
+    animation: modalSlide 0.3s ease-out;
+}
+
+@keyframes modalSlide {
+    from {
+        transform: translateY(-100px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.modal-header h3 {
+    margin: 0;
+    color: #333;
+}
+
+.close-modal {
+    font-size: 24px;
+    cursor: pointer;
+    color: #666;
+}
+
+.close-modal:hover {
+    color: #333;
+}
+
+.modal-body {
+    margin-bottom: 20px;
+}
+
+.modal-body input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+.modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+.modal-footer button {
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    border: none;
+    font-size: 14px;
+}
