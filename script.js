@@ -11,16 +11,23 @@ let selectedListId = null;
 //     document.querySelector('.login-box').style.display = 'block';
 // }
 
-const container = document.querySelector('.container');
-const registerBtn = document.querySelector('.register-btn');
-const loginBtn = document.querySelector('.login-btn');
+document.addEventListener('DOMContentLoaded', () => {
+    const container = document.querySelector('.container');
+    const registerBtn = document.querySelector('.register-btn');
+    const loginBtn = document.querySelector('.btn'); // Corrected selector
 
-registerBtn.addEventListener('click', () => {
-    container.classList.add('active');
-});
+    if (registerBtn && loginBtn) {
+        registerBtn.addEventListener('click', () => {
+            container.classList.add('active');
+        });
 
-loginBtn.addEventListener('click', () => {
-    container.classList.remove('active');
+        loginBtn.addEventListener('click', (event) => {
+            event.preventDefault(); // Prevent form submission
+            login();
+        });
+    } else {
+        console.error("Buttons not found. Check HTML structure.");
+    }
 });
 
 async function register() {
