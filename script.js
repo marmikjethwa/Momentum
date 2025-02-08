@@ -15,20 +15,34 @@ let currentListName = null;
 
 document.addEventListener('DOMContentLoaded', () => {
     const container = document.querySelector('.container');
-    const registerBtn = document.querySelector('.register-btn');
-    const loginBtn = document.querySelector('.btn'); // Corrected selector
+    const registerToggleBtn = document.querySelector('.register-btn'); 
+    const loginToggleBtn = document.querySelector('.login-btn'); 
+    const loginBtn = document.querySelector('.login-box .btn'); 
+    const registerBtn = document.querySelector('.register-box .btn');
 
-    if (registerBtn && loginBtn) {
-        registerBtn.addEventListener('click', () => {
-            container.classList.add('active');
+    registerToggleBtn.addEventListener('click', () => {
+        container.classList.add('active');
+    });
+
+    loginToggleBtn.addEventListener('click', () => {
+        container.classList.remove('active');
+    });
+
+    // Prevent duplicate event listeners
+    if (registerBtn && !registerBtn.dataset.listenerAttached) {
+        registerBtn.dataset.listenerAttached = "true"; 
+        registerBtn.addEventListener('click', (event) => {
+            event.preventDefault();
+            register();
         });
+    }
 
+    if (loginBtn && !loginBtn.dataset.listenerAttached) {
+        loginBtn.dataset.listenerAttached = "true"; 
         loginBtn.addEventListener('click', (event) => {
-            event.preventDefault(); // Prevent form submission
+            event.preventDefault();
             login();
         });
-    } else {
-        console.error("Buttons not found. Check HTML structure.");
     }
 });
 
