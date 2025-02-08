@@ -62,7 +62,8 @@ async function register() {
     const password = document.getElementById("register-password").value.trim();
 
     if (!username || !password) {
-        showAlert("Please enter both username and password.");
+        // showAlert("Please enter both username and password.");
+        alert("Please enter both username and password.");
         return;
     }
 
@@ -75,13 +76,16 @@ async function register() {
 
         const result = await response.json();
         if (response.ok) {
-            showAlert("Registration successful! Please login.");
+            // showAlert("Registration successful! Please login.");
+            alert("Registration successful! Please login.");
             showLogin();
         } else {
-            showAlert(result.error);
+            // showAlert(result.error);
+            alert(result.error);
         }
     } catch (error) {
-        showAlert("Error during registration. Please try again.");
+        // showAlert("Error during registration. Please try again.");
+        alert("Error during registration. Please try again.");
     }
 }
 
@@ -91,12 +95,14 @@ async function login() {
     const recaptchaResponse = grecaptcha.getResponse(); // Get reCAPTCHA response
 
     if (!username || !password) {
-        showAlert("Please enter both username and password.");
+        // showAlert("Please enter both username and password.");
+        alert("Please enter both username and password.");
         return;
     }
 
     if (!recaptchaResponse) {
-        showAlert("Please complete the reCAPTCHA.");
+        // showAlert("Please complete the reCAPTCHA.");
+        alert("Please complete the reCAPTCHA.");
         return;
     }
 
@@ -113,10 +119,12 @@ async function login() {
             localStorage.setItem("username", username);
             window.location.href = "dashboard.html";
         } else {
-            showAlert(result.error);
+            // showAlert(result.error);
+            alert(result.error);
         }
     } catch (error) {
-        showAlert("Error during login. Please try again.");
+        // showAlert("Error during login. Please try again.");
+        alert("Error during login. Please try again.");
     }
 }
 
@@ -205,12 +213,14 @@ async function login() {
     const recaptchaResponse = grecaptcha.getResponse();
 
     if (!username || !password) {
-        showAlert("Please enter both username and password.");
+        // showAlert("Please enter both username and password.");
+        alert("Please enter both username and password.");
         return;
     }
 
     if (!recaptchaResponse) {
-        showAlert("Please complete the reCAPTCHA.");
+        // showAlert("Please complete the reCAPTCHA.");
+        alert("Please complete the reCAPTCHA.");
         return;
     }
 
@@ -227,10 +237,12 @@ async function login() {
             localStorage.setItem("username", username);
             window.location.href = "dashboard.html";
         } else {
-            showAlert(result.error);
+            // showAlert(result.error);
+            alert(result.error);
         }
     } catch (error) {
-        showAlert("Error during login. Please try again.");
+        // showAlert("Error during login. Please try again.");
+        alert("Error during login. Please try again.");
     }
 }
 
@@ -245,7 +257,8 @@ async function createList() {
     const name = document.getElementById("list-name").value.trim();
     
     if (!name) {
-        showAlert("List name cannot be empty");
+        // showAlert("List name cannot be empty");
+        alert("List name cannot be empty");
         return;
     }
 
@@ -260,10 +273,12 @@ async function createList() {
             document.getElementById("list-name").value = "";
             loadLists();
         } else {
-            showAlert("Error creating list");
+            // showAlert("Error creating list");
+            alert("Error creating list");
         }
     } catch (error) {
-        showAlert("Error creating list. Please try again.");
+        // showAlert("Error creating list. Please try again.");
+        alert("Error creating list. Please try again.");
     }
 }
 
@@ -297,7 +312,8 @@ async function loadLists() {
             container.appendChild(listDiv);
         });
     } catch (error) {
-        showAlert("Error loading lists. Please try again.");
+        // showAlert("Error loading lists. Please try again.");
+        alert("Error loading lists. Please try again.");
     }
 }
 
@@ -372,13 +388,15 @@ async function showTasks(listId, listName) {
 
 async function addTask() {
     if (!selectedListId) {
-        showAlert("Please select a list first");
+        // showAlert("Please select a list first");
+        alert("Please select a list first");
         return;
     }
 
     const content = document.getElementById("task-input").value.trim();
     if (!content) {
-        showAlert("Task cannot be empty");
+        // showAlert("Task cannot be empty");
+        alert("Task cannot be empty");
         return;
     }
 
@@ -394,7 +412,8 @@ async function addTask() {
             loadTasks(selectedListId);
         }
     } catch (error) {
-        showAlert("Error adding task. Please try again.");
+        // showAlert("Error adding task. Please try again.");
+        alert("Error adding task. Please try again.");
     }
 }
 
@@ -421,7 +440,8 @@ async function loadTasks(listId) {
             taskList.appendChild(taskItem);
         });
     } catch (error) {
-        showAlert("Error loading tasks. Please try again.");
+        // showAlert("Error loading tasks. Please try again.");
+        alert("Error loading tasks. Please try again.");
     }
 }
 
@@ -436,7 +456,8 @@ async function editTask(taskId, currentContent) {
             });
             if (response.ok) loadTasks(selectedListId);
         } catch (error) {
-            showAlert("Error updating task. Please try again.");
+            // showAlert("Error updating task. Please try again.");
+            alert("Error updating task. Please try again.");
         }
     }
 }
@@ -448,7 +469,8 @@ async function toggleTask(taskId) {
         });
         if (response.ok) loadTasks(selectedListId);
     } catch (error) {
-        showAlert("Error updating task. Please try again.");
+        // showAlert("Error updating task. Please try again.");
+        alert("Error updating task. Please try again.");
     }
 }
 
@@ -459,7 +481,8 @@ async function deleteTask(taskId) {
         });
         if (response.ok) loadTasks(selectedListId);
     } catch (error) {
-        showAlert("Error deleting task. Please try again.");
+        // showAlert("Error deleting task. Please try again.");
+        alert("Error deleting task. Please try again.");
     }
 }
 
